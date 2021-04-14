@@ -1,0 +1,11 @@
+bool czyPalindrom(int p) {
+	string liczba = to_string(p);
+	string liczbao;
+	for (int i = liczba.size() - 1; i >= 0; i--) {
+		liczbao.push_back(liczba[i]);
+	}
+	if (liczba == liczbao) {
+		return true;
+	}
+	return false;
+}
