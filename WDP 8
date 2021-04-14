@@ -1,0 +1,122 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct wdp {
+	vector<int> liczby;
+	vector<int> wystąpienia;
+};
+
+void wypisz(vector<int> tab) {
+	for (int i = 0; i < tab.size(); i++) {
+		cout << tab[i] << " ";
+	}
+	cout << endl;
+}
+
+int maximum(vector<int> tab) {
+	int max = tab[0];
+	for (int i = 1; i < tab.size(); i++) {
+		if (max < tab[i]) {
+			max = tab[i];
+		}
+	}
+	return max;
+}
+
+int suma(vector<int> tab) {
+	int wynik = 0;
+	for (int i = 0; i < tab.size(); i++) {
+		wynik += tab[i];
+	}
+	return wynik;
+}
+
+bool czyNalezy(vector<int> tab, int elem) {
+	for (int i = 0; i < tab.size(); i++) {
+		if (elem == tab[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool czyZawiera(vector<int> tab, vector<int> tab2) {
+	for (int i = 0; i < tab2.size(); i++) {
+		if (!czyNalezy(tab, tab[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+vector<int> unikalnosc(vector<int> tab) {
+	vector<int> wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		if (!czyNalezy(wynik, tab[i])) {
+			wynik.push_back(tab[i]);
+		}
+	}
+	return wynik;
+}
+
+int index(vector<int> tab, int elem, int pomin=0) {
+	for (int i = 0; i < tab.size(); i++) {
+		if (tab[i] == elem && pomin-- < 1) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+vector<int> wybierz(vector<int> tab, int dzielnik=2, int reszta=0) {
+	vector<int> wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		if (tab[i] % dzielnik == reszta) {
+			wynik.push_back(tab[i]);
+		}
+	}
+	return wynik;
+}
+
+wdp czestosc(vector<int> tab) {
+	wdp wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		int ind = index(wynik.liczby, tab[i]);
+		if (ind == -1) {
+			wynik.liczby.push_back(tab[i]);
+			wynik.wystąpienia.push_back(1);
+		}
+		else {
+			wynik.wystąpienia[ind]++;
+		}
+	}
+	return wynik;
+}
+
+void wypisz(wdp zm) {
+	wypisz(zm.liczby);
+	wypisz(zm.wystąpienia);
+}
+
+int main(){	
+	vector<int> liczbyduzo = { 1,1,1,2,2,3,4,5,5,5,5,6,7,8 };
+	vector<int> liczbymalo = { 3,4,6,7,1 };
+	wypisz(liczbyduzo);
+	wypisz(liczbymalo);
+	cout << maximum(liczbyduzo) << endl;
+	cout << suma(liczbymalo) << endl;
+	cout << czyNalezy(liczbyduzo, 9) << endl;
+	cout << czyZawiera(liczbyduzo, liczbymalo) << endl;
+	vector<int> unik = unikalnosc(liczbyduzo);
+	wypisz(unik);
+	cout << index(liczbyduzo, 5, 3) << endl;
+	vector<int> wyb = wybierz(liczbyduzo, 4, 3);
+	wypisz(wyb);
+
+	wdp wynik = czestosc(liczbyduzo);
+	wypisz(liczbyduzo);
+	wypisz(wynik);
+
+	return 0;
+}
