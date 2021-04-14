@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+int dodaj(int a,int b)
+{
+int wynik = a + b;
+return wynik;
+}
+int main()
+{
+cout << "WDP jest super!\n";
+int tmp=5; //<=> int tmp; tmp = 5;
+cout << tmp;
+cout << dodaj(tmp,8); //<=> int wynik=dodaj(tmp,8); std::cout<<wynik;
+return tmp;
+}
