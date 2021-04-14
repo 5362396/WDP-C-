@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Car {
+  public:
+    string brand;
+    string model;
+    Car() {
+    cout << "Autko\n";
+    }
+    int year;
+        void wrum() {
+        cout << "Wrum";
+    }
+};
+
+int main() {
+  Car carObj1;
+  carObj1.brand = "BMW";
+  carObj1.model = "X5";
+  carObj1.year = 1999;
+  Car carObj2;
+  carObj2.brand = "Ford";
+  carObj2.model = "Mustang";
+  carObj2.year = 1969;
+  cout << carObj1.brand << " " << carObj1.model << " " << carObj1.year << "\n";
+  cout << carObj2.brand << " " << carObj2.model << " " << carObj2.year << "\n";
+  carObj1.wrum();
+  return 0;
+}
+
+
+
+#include <iostream>
+using namespace std;
+
+class Car {
+  public:
+    string brand;
+    string model;
+    int year;
+    Car(string x, string y, int z) {
+      brand = x;
+      model = y;
+      year = z;
+    }
+};
+
+int main() {
+  Car carObj1("BMW", "X5", 1999);
+  Car carObj2("Ford", "Mustang", 1969);
+  cout << carObj1.brand << " " << carObj1.model << " " << carObj1.year << "\n";
+  cout << carObj2.brand << " " << carObj2.model << " " << carObj2.year << "\n";
+  return 0;
+}
