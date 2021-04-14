@@ -1,0 +1,137 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct wdp {
+	vector<int> liczby;
+	vector<int> wystapienia;
+};
+
+void wypisz(vector<int> tab) {
+	for (int i = 0; i < tab.size(); i++) {
+		cout << tab[i] << " ";
+	}
+	cout << endl;
+}
+
+bool czyNalezy(vector<int> tab, int elem) {
+	for (int i = 0; i < tab.size(); i++) {
+		if (elem == tab[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool czyZawiera(vector<int> tab, vector<int> tab2) {
+	for (int i = 0; i < tab2.size(); i++) {
+		if (!czyNalezy(tab, tab2[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+vector<int> unikalnosc(vector<int> tab) {
+	vector<int> wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		if (!czyNalezy(wynik, tab[i])) {
+			wynik.push_back(tab[i]);
+		}
+	}
+	return wynik;
+}
+
+void wypisz(wdp zm) {
+	wypisz(zm.liczby);
+	wypisz(zm.wystapienia);
+}
+
+int index(vector<int> tab, int elem, int pomin = 0) {
+	for (int i = 0; i < tab.size(); i++) {
+		if (elem == tab[i] && pomin-- < 1) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+wdp czestosc(vector<int> tab) {
+	wdp wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		int ind = index(wynik.liczby, tab[i]);
+		if (ind == -1) {
+			wynik.liczby.push_back(tab[i]);
+			wynik.wystapienia.push_back(1);
+		}
+		else {
+			wynik.wystapienia[ind]++;
+		}
+	}
+	return wynik;
+}
+
+vector<int> wybierz(vector<int> tab, int dzielnik = 2, int reszta = 0) {
+	vector<int> wynik;
+	for (int i = 0; i < tab.size(); i++) {
+		if (tab[i] % dzielnik == reszta) {
+			wynik.push_back(tab[i]);
+		}
+	}
+	return wynik;
+}
+
+vector<int> generuj(int n, int min, int max) {
+	vector<int> wynik;
+	int dl = max - min + 1;
+	for (int i = 0; i < n; i++) {
+		int liczba = rand() % dl + min;
+		wynik.push_back(liczba);
+	}
+	return wynik;
+}
+
+vector<int> generuj(int n, int max = 50) {
+	return generuj(n, 0, max);
+}
+
+int sumaCzesciowa(vector<int> tab, int p, int k) {
+	int wynik = 0;
+	for (int i = p; i <= k; i++) {
+		wynik += tab[i];
+	}
+	return wynik;
+}
+
+int xd(vector<int> tab) {
+	int wynik = tab[0];
+	for (int p = 0; p < tab.size(); p++) {
+		for (int k = p; k < tab.size(); k++) {
+			if (wynik < sumaCzesciowa(tab, p, k)) {
+				wynik = sumaCzesciowa(tab, p, k);
+			}
+		}
+	}
+	return wynik;
+}
+
+int main()
+{
+	vector<int> liczbyduzo = { 1,4,4,4,6,6,6,4,4,3,3,9,2,7 };
+	vector<int> liczbymalo = { 8,3,1,5,4 };
+	wypisz(liczbyduzo);
+	wypisz(liczbymalo);
+	cout << czyNalezy(liczbymalo, 4) << endl;
+	cout << czyZawiera(liczbyduzo, liczbymalo) << endl;
+	vector<int> unik = unikalnosc(liczbyduzo);
+	wypisz(unik);
+	wdp cze = czestosc(liczbyduzo);
+	wypisz(cze);
+	cout << index(liczbyduzo, 4, 4) << endl;
+	vector<int> wyb = wybierz(liczbyduzo, 3, 1);
+	wypisz(wyb);
+	vector<int> losulosu = generuj(10);
+	wypisz(losulosu);
+	vector<int> trasa = { 8,3,-5,-2,9,4 };
+	cout << xd(trasa) << endl;
+}
